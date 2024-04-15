@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMI Calculator</title>
+    <style>
+        div{
+           box-sizing: border-box;
+           border: 3px solid blue;
+           margin: 20px;
+           padding: 50px;
+           background-color: gainsboro;
+        }
+        input{
+            width: 50%;
+            font-size: 30px;
+        }
+        label{
+            font-size: 30px;
+        }
+        input[type=submit]{
+            width: 15%;
+            padding: 10px;
+            font-size: 20px;
+            background-color: blue;
+            color: white;
+        }
+        input[type=submit]:hover{
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>EMI Calculator</h1>
+    <form onsubmit="return false">
+        <label for="amount">Amount:</label>
+        <input type="text" id="amount"><br><br>
+        <label for="rate">Principal:</label>
+        <input type="text" id="rate"><br><br>
+        <label for="years">Years of Pay:</label>
+        <input type="text" id="years"><br><br>
+        <input type="submit" value="Calculate" onclick="calculate(amount.value,rate.value,years.value)">
+    </form>
+    </div>
+    <label for="output" id="demo"></label>
+    <script>
+        function calculate(amount,rate,years){
+          var p = parseInt(amount);
+          var r = parseFloat(rate);
+          var y = parseInt(years);
+
+          var manthly_interest = r/12/100;
+
+          var maonths = y*12;
+          //PxRx(1+R)^N/[(1+R)^N-1] This is Loan EMI Form
+
+          var x =Math.pow(1+manthly_interest,maonths);
+          var monthly = (p*x*manthly_interest)/(x-1);
+
+          var emi = monthly.toFixed(2);
+          var totalpayment = (emi*maonths).toFixed(2);
+          var totalInterest = (totalpayment-p).toFixed(2);
+
+          document.getElementById("demo").innerHTML = "Loam Amount is :"+ "<b>"+emi +"<br>"+"Total Payment is : "+"<b>"+totalpayment+"<br>"+"Total interest is :"+"<b>" + totalInterest;
+        }
+    </script>
+</body>
+</html>
